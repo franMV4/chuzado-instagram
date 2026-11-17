@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:SG;src:url(assets/fuentes/SpaceGrotesk-Bold.ttf)}
+@font-face{font-family:Inter;src:url(assets/fuentes/Inter-Regular.ttf)}
+@font-face{font-family:Inter;font-weight:700;src:url(assets/fuentes/Inter-Bold.ttf)}
+@font-face{font-family:Mono;src:url(assets/fuentes/JetBrainsMono-Bold.ttf)}
+:root{--bg:#0a0a0a;--s:#131313;--b:#2a2a2a;--t:#f5f5f5;--m:#909090;--lima:#d4ff00}
+*{margin:0;box-sizing:border-box}
+body{width:1080px;height:1350px;background:var(--bg);color:var(--t);font-family:Inter;overflow:hidden;position:relative}
+body::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(var(--b) 1px,transparent 1px) 0 0/90px 90px,
+  linear-gradient(90deg,var(--b) 1px,transparent 1px) 0 0/90px 90px;opacity:.35}
+body::after{content:"";position:absolute;width:900px;height:900px;right:-350px;bottom:-350px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,255,0,.16),transparent 65%)}
+.w{position:absolute;inset:90px;display:flex;flex-direction:column;z-index:1}
+.k{font:28px Mono;letter-spacing:.35em;color:var(--lima)}
+h1{font:110px/1.02 SG;letter-spacing:-.03em;margin-top:40px}
+h2{font:82px/1.05 SG;letter-spacing:-.025em}
+em{font-style:normal;color:var(--lima)}
+b{color:var(--lima);font-weight:700}
+p{font-size:44px;line-height:1.4;color:#d0d0d0;margin-top:40px}
+.n{font:150px/1 Mono;color:var(--lima);margin-bottom:40px}
+.foot{position:absolute;left:90px;right:90px;bottom:50px;display:flex;justify-content:space-between;font:24px Mono;letter-spacing:.3em;color:var(--m);z-index:1}
+.swipe{margin:auto 0 40px;font:30px Mono;letter-spacing:.2em;color:var(--lima)}
+.cover h1{font-size:124px}
+table{width:100%;border-collapse:collapse;margin-top:44px;font-size:38px}
+th{font:26px Mono;letter-spacing:.2em;color:var(--m);text-align:left;padding:0 0 18px;border-bottom:2px solid var(--b)}
+td{padding:20px 0;border-bottom:1px solid var(--b)}
+td:not(:first-child),th:not(:first-child){font-family:Mono;text-align:right}
+td:first-child{font-weight:700}
+.dense td{padding:13px 0}
+.note{font-size:28px;color:var(--m);margin-top:28px}
+.shot{flex-direction:row;gap:60px;align-items:center}
+.shot .txt{flex:1}
+.phone{width:440px;height:1030px;border:14px solid #222;border-radius:64px;overflow:hidden;background:#000;flex:none;box-shadow:0 0 0 2px #333,0 40px 120px rgba(0,0,0,.6)}
+.phone img{width:100%;display:block}
+.cta{align-items:center;justify-content:center;text-align:center}
+.cta img{width:240px;border-radius:56px;margin-bottom:70px}
+</style></head><body>
+<div id="r"></div>
+<script src="posts.js"></script>
+<script>
+const q = new URLSearchParams(location.search);
+const post = POSTS.find(x => x.id === q.get('p'));
+const i = +q.get('s'), s = post.slides[i], total = post.slides.length;
+const T = {
+  cover: s => `<div class="w cover"><div class="k">${s.k}</div><h1>${s.h}</h1><p>${s.p}</p><div class="swipe">DESLIZA →</div></div>`,
+  text:  s => `<div class="w" style="justify-content:center"><div class="n">${s.n}</div><h2>${s.h}</h2><p>${s.p}</p></div>`,
+  rows:  s => `<div class="w"><h2>${s.h}</h2><table class="${s.rows.length > 6 ? 'dense' : ''}"><tr>${s.head.map(h => `<th>${h}</th>`).join('')}</tr>${
+            s.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</table>${s.note ? `<div class="note">${s.note}</div>` : ''}</div>`,
+  shot:  s => `<div class="w shot"><div class="txt"><div class="k">LA APP</div><h2 style="margin-top:30px">${s.h}</h2><p>${s.p}</p></div><div class="phone"><img src="${SHOTS + s.img}"></div></div>`,
+  cta:   s => `<div class="w cta"><img src="assets/logo.png"><h2>${s.h}</h2><p>${s.p}</p></div>`,
+};
+document.getElementById('r').innerHTML = T[s.t](s) +
+  `<div class="foot"><span>CHUZADO</span><span>${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}</span></div>`;
+</script>
+</body></html>
