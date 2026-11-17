@@ -37,5 +37,5 @@ Enlace de la bio: https://play.google.com/store/apps/details?id=com.chuzado.chuz
 `#gimnasio #gym #hipertrofia #entrenamiento #fuerza #musculacion #gymespaña #powerlifting #culturismo #appdegym`
 
 ## Cómo se generan las imágenes
-`node render.mjs` lee `posts.js` y crea `salida/<post>/01.png, 02.png…` con `plantilla.html` (Chrome o Chromium headless; ruta en la variable CHROME si no es la de Windows). Todo lo que usan las plantillas está en `assets/`, la carpeta no depende de nada de fuera.
+`node render.mjs` lee `posts.js` y crea `salida/<post>/01.jpg, 02.jpg…` con `plantilla.html` (Chrome o Chromium headless; ruta en la variable CHROME si no es la de Windows). Todo lo que usan las plantillas está en `assets/`, la carpeta no depende de nada de fuera.
 Para añadir posts: nuevos objetos en `posts.js` y volver a ejecutar.

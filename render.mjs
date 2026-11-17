@@ -1,4 +1,4 @@
-// Renderiza cada diapositiva de posts.js a salida/<post>/NN.png y su caption.txt.
+// Renderiza cada diapositiva de posts.js a salida/<post>/NN.jpg (Instagram solo acepta JPG) y su caption.txt.
 // Uso: node render.mjs [id-del-post]   (sin id = todos)
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -17,7 +17,7 @@ for (const p of POSTS.filter(p => !solo || p.id === solo)) {
   writeFileSync(join(dir, 'caption.txt'), p.caption + '\n');
   if (p.tipo === 'reel') { console.log(p.id, 'reel →', p.video); continue; } // el vídeo se publica desde assets/
   p.slides.forEach((_, i) => {
-    const out = join(dir, String(i + 1).padStart(2, '0') + '.png');
+    const out = join(dir, String(i + 1).padStart(2, '0') + '.jpg');
     execFileSync(CHROME, ['--headless=new', '--hide-scrollbars', '--allow-file-access-from-files', '--force-device-scale-factor=1',
       '--window-size=1080,1350', '--virtual-time-budget=3000', `--screenshot=${out}`, `${tpl}?p=${p.id}&s=${i}`], { stdio: 'ignore' });
   });
